@@ -382,6 +382,7 @@ def process_hash(gradient_grid, grid_step_h, grid_step_v):
     iter_count = 0
     while iter_count < 10:
         did_clip = False
+        iter_count += 1
 
         # Compute Equation 15.
         # The norm has a very tiny epsilon in order to prevent division by zero.
@@ -407,7 +408,6 @@ def process_hash(gradient_grid, grid_step_h, grid_step_v):
         # This finishes if nothing got clipped
         if not did_clip:
             break
-        iter_count += 1
     if DEBUG_LOGGING:
         print("iter done!")
 
@@ -468,6 +468,7 @@ def imgnet_test():
             else:
                 print(f"{filename}: {expected_hash} {photo_hash}", file=f)
             f.flush()
+
 
 # if __name__ == '__main__':
 #     import sys
