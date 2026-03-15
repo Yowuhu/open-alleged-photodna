@@ -143,6 +143,8 @@ def box_sum_for_radius(
     # Make sure the corners are within the image bounds
     corner_a_x = clamp(corner_a_x, 0, im_w - 2)
     corner_a_y = clamp(corner_a_y, 0, im_h - 2)
+    corner_d_x = clamp(corner_d_x, 0, im_w - 2)
+    corner_d_y = clamp(corner_d_y, 0, im_h - 2)
     if DEBUG_LOGGING:
         print(f"corner r{radius} {corner_a_x} {corner_a_y} | {corner_d_x} {corner_d_y}")
 
@@ -402,6 +404,8 @@ def process_hash(gradient_grid, grid_step_h, grid_step_v):
             gradient_grid[i] = val_i
 
             if val_i >= HASH_CLIP_CONST and iter_count < 10:
+                if DEBUG_LOGGING:
+                    print(f"idx {i} clipped")
                 gradient_grid[i] = HASH_CLIP_CONST
                 did_clip = True
 
