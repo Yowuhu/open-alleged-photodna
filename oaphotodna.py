@@ -94,6 +94,12 @@ def preprocess_pixel_sum_np(im):
     return im.flatten()
 
 
+if USE_NUMPY:
+    preprocess_pixel_sum_ = preprocess_pixel_sum_np
+else:
+    preprocess_pixel_sum_ = preprocess_pixel_sum
+
+
 # ----- (3.2) Feature extraction -----
 
 # This is equal to 26. This means that the `u` and `v` coordinates
@@ -440,11 +446,7 @@ def compute_hash(filename):
     im = Image.open(filename)
     if im.mode != 'RGB':
         im = im.convert(mode='RGB')
-    # Preprocess into summed array
-    if not USE_NUMPY:
-        summed_pixels = preprocess_pixel_sum(im)
-    else:
-        summed_pixels = preprocess_pixel_sum_np(im)
+    summed_pixels = preprocess_pixel_sum_(im)
     (feature_grid, grid_step_h, grid_step_v) = \
         compute_feature_grid(summed_pixels, im.width, im.height)
     gradient_grid = compute_gradient_grid(feature_grid)
